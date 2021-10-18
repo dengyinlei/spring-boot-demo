@@ -33,7 +33,7 @@ public class RedissonConfig {
 //        return Redisson.create(config)
 
         // 本例子使用的是yaml格式的配置文件，读取使用Config.fromYAML，如果是Json文件，则使用Config.fromJSON
-        Config config = Config.fromYAML(RedissonConfig.class.getClassLoader().getResource("redisson-single.yml"));
+        Config config = Config.fromYAML(RedissonConfig.class.getClassLoader().getResource("redisson-singleServer.yml"));
         return Redisson.create(config);
     }
 
@@ -58,4 +58,45 @@ public class RedissonConfig {
         redisson = Redisson.create(config);
         return redisson;
     }*/
+
+/*    *//**
+     * 集群模式
+     *
+     **//*
+    @Bean
+    public RedissonClient getClusterRedissonClient() throws IOException {
+        ResourceLoader loader = new DefaultResourceLoader();
+        Resource resource = loader.getResource("redisson-cluster.yml");
+        Config config = Config.fromYAML(resource.getInputStream());
+        config.useClusterServers();
+        return Redisson.create(config);
+    }
+
+    *//**
+     * 主从模式
+     *
+     **//*
+    @Bean
+    public RedissonClient getMasterSalveRedissonClient() throws IOException {
+        ResourceLoader loader = new DefaultResourceLoader();
+        Resource resource = loader.getResource("redisson-masterSlave.yml");
+        Config config = Config.fromYAML(resource.getInputStream());
+        config.useClusterServers();
+        return Redisson.create(config);
+    }
+
+    *//**
+     * 哨兵模式
+     *
+     **//*
+    @Bean
+    public RedissonClient getSentinelRedissonClient() throws IOException {
+        ResourceLoader loader = new DefaultResourceLoader();
+        Resource resource = loader.getResource("redisson-sentinel.yml");
+        Config config = Config.fromYAML(resource.getInputStream());
+        config.useClusterServers();
+        return Redisson.create(config);
+    }*/
+
+
 }

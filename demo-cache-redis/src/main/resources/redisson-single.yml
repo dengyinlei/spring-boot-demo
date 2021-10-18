@@ -23,5 +23,7 @@ singleServerConfig:
 threads: 16
 # 线程池数量
 nettyThreads: 32
+# Redisson的对象编码类是用于将对象进行序列化和反序列化，以实现对该对象在Redis里的读取和存储
+# org.redisson.codec.JsonJacksonCodec	Jackson JSON 编码 默认编码
 codec: !<org.redisson.codec.JsonJacksonCodec> {}
 transportMode: "NIO"
