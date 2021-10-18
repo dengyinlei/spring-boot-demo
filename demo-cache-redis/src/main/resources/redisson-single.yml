@@ -1,0 +1,27 @@
+#Redisson配置
+singleServerConfig:
+  address: "redis://10.12.109.165:9736"
+  password: gdxmss@1218
+  clientName: springboot-redisson-demo
+  database: 0
+  idleConnectionTimeout: 10000
+  pingTimeout: 1000
+  connectTimeout: 10000
+  timeout: 3000
+  retryAttempts: 3
+  retryInterval: 1500
+  reconnectionTimeout: 3000
+  failedAttempts: 3
+  subscriptionsPerConnection: 5
+  subscriptionConnectionMinimumIdleSize: 1
+  subscriptionConnectionPoolSize: 50
+  connectionMinimumIdleSize: 32
+  connectionPoolSize: 64
+  dnsMonitoringInterval: 5000
+  #dnsMonitoring: false
+# 线程池数量
+threads: 16
+# 线程池数量
+nettyThreads: 32
+codec: !<org.redisson.codec.JsonJacksonCodec> {}
+transportMode: "NIO"
