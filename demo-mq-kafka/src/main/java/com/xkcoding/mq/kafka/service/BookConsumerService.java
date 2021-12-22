@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class BookConsumerService {
     private final ObjectMapper objectMapper = new ObjectMapper();
-    @KafkaListener(topics = {"${kafka.topic.my-topic}"}, groupId = "group1",containerFactory = "ackContainerFactory")
+    @KafkaListener(topics = {"${kafka.topics[0].name}"}, groupId = "denley",containerFactory = "ackContainerFactory")
     public void handleMessage(ConsumerRecord<String, String> bookConsumerRecord, Acknowledgment acknowledgment) {
         try {
             Book book = objectMapper.readValue(bookConsumerRecord.value(), Book.class);
