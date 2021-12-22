@@ -40,7 +40,9 @@ public class KafkaConfig {
     public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
+        //设置其为批量消费并设置并发量为3，这个并发量根据分区数决定，必须小于等于分区数，否则会有线程一直处于空闲状态。
         factory.setConcurrency(KafkaConsts.DEFAULT_PARTITION_NUM);
+        //批量消费
         factory.setBatchListener(true);
         factory.getContainerProperties().setPollTimeout(3000);
         return factory;

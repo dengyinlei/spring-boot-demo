@@ -1,6 +1,5 @@
 package com.xkcoding.mq.kafka.handler;
 
-import com.xkcoding.mq.kafka.constants.KafkaConsts;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -19,7 +18,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class MessageHandler {
 
-    @KafkaListener(topics = KafkaConsts.TOPIC_TEST, containerFactory = "ackContainerFactory")
+    @KafkaListener(topics = "test", containerFactory = "ackContainerFactory")
     public void handleMessage(ConsumerRecord record, Acknowledgment acknowledgment) {
         try {
             String message = (String) record.value();
