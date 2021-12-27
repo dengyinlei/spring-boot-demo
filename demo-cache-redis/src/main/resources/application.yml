@@ -2,14 +2,14 @@ spring:
   session:
     store-type: redis
   redis:
-    host: redis-gd
+    host: 47.104.216.40
     port: 9736
     # 连接超时时间（记得添加单位，Duration）
     timeout: 10000ms
     # Redis默认情况下有16个分片，这里配置具体使用的分片
     database: 0
     # 密码 没有则可以不填
-    password: gdxmss@1218
+    password: denley
     # 集群配置（根据实际情况配置多节点）
     #    cluster:
     #      nodes:

@@ -2,6 +2,7 @@ package com.xkcoding.log.aop;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 /**
  * <p>
@@ -11,6 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author yangkai.shen
  * @date Created in 2018-10-01 22:05
  */
+@EnableAspectJAutoProxy
 @SpringBootApplication
 public class SpringBootDemoLogAopApplication {
 
