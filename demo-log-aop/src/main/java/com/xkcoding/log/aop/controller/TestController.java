@@ -3,11 +3,9 @@ package com.xkcoding.log.aop.controller;
 import cn.hutool.core.lang.Dict;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
+import com.xkcoding.log.aop.aspectj.RequestLog;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -46,5 +44,11 @@ public class TestController {
         final String jsonStr = JSONUtil.toJsonStr(map);
         log.info(jsonStr);
         return Dict.create().set("json", map);
+    }
+
+    @RequestLog
+    @PostMapping("/requestLog/test")
+    public String requestLog(@RequestParam String param){
+        return "success";
     }
 }

@@ -1,7 +1,7 @@
 #Redisson配置
 singleServerConfig:
-  address: "redis://10.12.109.165:9736"
-  password: gdxmss@1218
+  address: "redis://47.104.216.40:9736"
+  password: denley
   clientName: springboot-redisson-demo
   database: 0
   idleConnectionTimeout: 10000

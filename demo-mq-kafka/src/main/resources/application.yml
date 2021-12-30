@@ -25,9 +25,18 @@ spring:
       # 指定默认消费者group id --> 由于在kafka中，同一组中的consumer不会读取到同一个消息，依靠groud.id设置组名
       group-id: denley
       # 手动提交
+      # 这个参数指定了消费者是否自动提交消费位移，默认为true。
+      # 如果需要减少重复消费或者数据丢失，你可以设置为false，然后手动提交。如果为true，
+      # 你可能需要关注自动提交的时间间隔，该间隔由auto.commit.interval.ms设置。
       enable-auto-commit: false
+      #周期性自动提交的间隔，单位毫秒
+      auto-commit-interval: 2000 #默认值：5000
+      # 批量一次最大拉取数据量
+      max-poll-records: 5
       # 配置消费者消息offset是否自动重置(消费者重连会能够接收最开始的消息)
       # smallest和largest才有效，如果smallest重新0开始读取，如果是largest从logfile的offset读取。一般情况下我们都是设置smallest
+      # 这个参数指定了当消费者第一次读取分区或者无offset时拉取那个位置的消息，
+      # 可以取值为latest（从最新的消息开始消费）,earliest（从最老的消息开始消费）,none（如果无offset就抛出异常）
       auto-offset-reset: latest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
@@ -37,6 +46,7 @@ spring:
       isolation-level: read_committed #仅读取已提交的消息
     listener:
       log-container-config: false
+      #推荐设置为topic的分区数
       concurrency: 5
       # 手动提交
       ack-mode: manual_immediate
