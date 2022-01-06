@@ -115,5 +115,14 @@ public class BookConsumerService {
     }
 
 
+    @KafkaListener(
+        topics = "topicName",
+        containerFactory = "filterKafkaListenerContainerFactory")
+    public void listenWithFilter(String message) {
+        System.out.println("Received Message in filtered listener: " + message);
+    }
+
+
+
 
 }
