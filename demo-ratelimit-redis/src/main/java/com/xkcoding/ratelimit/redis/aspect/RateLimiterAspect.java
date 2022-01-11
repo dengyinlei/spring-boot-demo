@@ -2,9 +2,11 @@ package com.xkcoding.ratelimit.redis.aspect;
 
 import cn.hutool.core.util.StrUtil;
 import com.xkcoding.ratelimit.redis.annotation.RateLimiter;
+import com.xkcoding.ratelimit.redis.config.LimitType;
 import com.xkcoding.ratelimit.redis.util.IpUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -52,6 +54,20 @@ public class RateLimiterAspect {
         RateLimiter rateLimiter = AnnotationUtils.findAnnotation(method, RateLimiter.class);
         if (rateLimiter != null) {
             String key = rateLimiter.key();
+            LimitType limitType = rateLimiter.limitType();
+            /**
+             * 根据限流类型获取不同的key ,如果不传我们会以方法名作为key
+             */
+            switch (limitType) {
+                case IP:
+                    key = IpUtil.getIpAddr();
+                    break;
+                case CUSTOMER:
+                    key = rateLimiter.key();
+                    break;
+                default:
+                    key = StringUtils.upperCase(method.getName());
+            }
             // 默认用类名+方法名做限流的 key 前缀
             if (StrUtil.isBlank(key)) {
                 key = method.getDeclaringClass().getName() + StrUtil.DOT + method.getName();

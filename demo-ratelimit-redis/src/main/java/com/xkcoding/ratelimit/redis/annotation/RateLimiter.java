@@ -1,5 +1,6 @@
 package com.xkcoding.ratelimit.redis.annotation;
 
+import com.xkcoding.ratelimit.redis.config.LimitType;
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.core.annotation.AnnotationUtils;
 
@@ -39,10 +40,19 @@ public @interface RateLimiter {
     /**
      * 超时时长，默认1分钟
      */
+    /**
+     * 给定的时间范围 单位(分钟)
+     */
     long timeout() default 1;
 
     /**
      * 超时时间单位，默认 分钟
      */
     TimeUnit timeUnit() default TimeUnit.MINUTES;
+
+    /**
+     * 限流的类型(用户自定义key或者请求ip)
+     */
+    LimitType limitType() default LimitType.CUSTOMER;
+
 }

@@ -18,6 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TestController {
 
+    /**
+     * 一分钟内只允许放行5个请求
+     * @return
+     */
     @RateLimiter(value = 5)
     @GetMapping("/test1")
     public Dict test1() {
