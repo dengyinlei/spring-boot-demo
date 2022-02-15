@@ -8,7 +8,7 @@ import org.springframework.web.context.support.GenericWebApplicationContext;
 import javax.annotation.PostConstruct;
 import java.util.List;
 /**
- * @description : 
+ * @description : 根据配置文件自动创建topic
  * @author : Denley
  * @date : 2021/12/21 19:24
  **/

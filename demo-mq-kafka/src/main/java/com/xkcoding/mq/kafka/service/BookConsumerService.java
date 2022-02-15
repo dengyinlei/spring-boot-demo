@@ -19,11 +19,12 @@ import java.util.List;
 @Slf4j
 public class BookConsumerService {
     private final ObjectMapper objectMapper = new ObjectMapper();
-    @KafkaListener(topics = {"${kafka.topics[0].name}"}, groupId = "denley",containerFactory = "ackContainerFactory")
+    @KafkaListener(id = "consumer-id1",topics = {"${kafka.topics[0].name}"}, groupId = "denley",containerFactory = "ackContainerFactory")
     public void handleMessage(ConsumerRecord<String, String> bookConsumerRecord, Acknowledgment acknowledgment) {
         try {
             Book book = objectMapper.readValue(bookConsumerRecord.value(), Book.class);
-            log.info("消费者消费topic:{} partition:{}的消息 -> {}", bookConsumerRecord.topic(), bookConsumerRecord.partition(), book.toString());
+            log.info("ConsumerRecord: {}",objectMapper.writeValueAsString(bookConsumerRecord));
+            log.info("消费者消费topic:{} partition:{} offset:{} 的消息 -> {}", bookConsumerRecord.topic(), bookConsumerRecord.partition(),bookConsumerRecord.offset(), book.toString());
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         } finally {
@@ -112,6 +113,15 @@ public class BookConsumerService {
             ack.acknowledge();  //手动提交偏移量
         }
     }
+
+
+    @KafkaListener(
+        topics = "topicName",
+        containerFactory = "filterKafkaListenerContainerFactory")
+    public void listenWithFilter(String message) {
+        System.out.println("Received Message in filtered listener: " + message);
+    }
+
 
 
 

@@ -119,4 +119,24 @@ public class KafkaConfig {
         return factory;
     }
 
+
+    /**
+     * 我们可以通过添加一个自定义的过滤器来配置监听器来消费特定类型的消息。这可以通过给KafkaListenerContainerFactory设置一个RecordFilterStrategy来完成。
+     *
+     * @Bean
+     * @return
+     */
+    @Bean
+    public ConcurrentKafkaListenerContainerFactory<String, String>
+    filterKafkaListenerContainerFactory() {
+
+        ConcurrentKafkaListenerContainerFactory<String, String> factory =
+            new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(consumerFactory());
+        factory.setRecordFilterStrategy(
+            record -> record.value().contains("World"));
+        return factory;
+    }
+
+
 }
