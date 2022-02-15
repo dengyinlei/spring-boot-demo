@@ -71,6 +71,7 @@
     <module>demo-flyway</module>
     <module>demo-pay</module>
     <module>demo-ffmpeg</module>
+    <module>demo-javacore</module>
   </modules>
   <packaging>pom</packaging>
 

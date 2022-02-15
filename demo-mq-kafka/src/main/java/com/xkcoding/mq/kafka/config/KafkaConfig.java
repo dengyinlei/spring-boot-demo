@@ -29,6 +29,7 @@ public class KafkaConfig {
 
     /**
      * 生产者模板
+     *
      * @return
      */
     @Bean
@@ -38,6 +39,7 @@ public class KafkaConfig {
 
     /**
      * 生产者工厂
+     *
      * @return
      */
     @Bean
@@ -55,10 +57,13 @@ public class KafkaConfig {
         //设置为批量消费，每个批次数量在Kafka配置参数中设置ConsumerConfig.MAX_POLL_RECORDS_CONFIG
         factory.setBatchListener(true);
         factory.getContainerProperties().setPollTimeout(3000);
+        //同步提交
+        factory.getContainerProperties().setSyncCommits(true);
         return factory;
     }
 
-    /**创建消费者工厂
+    /**
+     * 创建消费者工厂
      *
      * @return
      */
@@ -88,15 +93,22 @@ public class KafkaConfig {
          *
          * MANUAL ： Acknowledgment.acknowledge()即提交Offset，和Batch类似
          *
+         *         //设置提交偏移量的方式， MANUAL_IMMEDIATE 表示消费一条提交一次；MANUAL表示批量提交一次
          * MANUAL_IMMEDIATE： Acknowledgment.acknowledge()被调用即提交Offset
          */
         factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL_IMMEDIATE);
-        factory.setConcurrency(KafkaConsts.DEFAULT_PARTITION_NUM);
+        factory.setConcurrency(1);
+        //用于设置等待消息返回的超时时间，如果设置为 0 则 Kafka 会立即从本地缓存的消息集合中获取符合期望的结果进行返回。
+        factory.getContainerProperties().setPollTimeout(3000);
+        //异步提交，默认同步提交
+        factory.getContainerProperties().setSyncCommits(false);
+        //设置为批量消费，每个批次数量在Kafka配置参数中设置ConsumerConfig.MAX_POLL_RECORDS_CONFIG
+        factory.setBatchListener(true);
         return factory;
     }
 
     /**
-     *  消费者批量工程
+     * 消费者批量工程
      */
     @Bean
     public KafkaListenerContainerFactory<?> batchFactory() {
